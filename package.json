@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "my first node.js greenfield project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Talha Mansoor",
+  "license": "MIT"
+}
