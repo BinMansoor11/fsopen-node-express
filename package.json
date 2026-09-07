@@ -4,9 +4,12 @@
   "description": "my first node.js greenfield project",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js --watch",
+    "start": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Talha Mansoor",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
