@@ -1,7 +1,40 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
+// ============= Middleware ===============
+
+// const requestLogger = (request, response, next) => {
+//   console.log("Method:", request.method);
+//   console.log("Path:", request.path);
+//   console.log("body:", request.body);
+//   console.log("-------------------");
+//   next();
+// };
+
+const unknownEndpoint = (request, response, next) => {
+  response.status(404).send({ error: "unknown endpoint" });
+  next();
+};
+
+// ========================================
+
 app.use(express.json());
+// app.use(requestLogger);
+app.use(
+  morgan(function (tokens, req, res) {
+    return [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, "content-length"),
+      "-",
+      tokens["response-time"](req, res),
+      "ms",
+      JSON.stringify(req.body, 2, null),
+    ].join(" ");
+  }),
+);
 
 const generateId = () => {
   const maxId =
@@ -71,6 +104,17 @@ app.post("/api/notes", (request, response) => {
 
   response.json(note);
 });
+
+app.get("/api/info", (_request, response) => {
+  response.send(
+    `<div>
+        <p>We have ${notes.length > 0 ? notes.length : 0} available</p>
+        <p>${Date()}</p>
+    </div>`,
+  );
+});
+
+app.use(unknownEndpoint);
 
 const PORT = 3000;
 app.listen(PORT, () => {
