@@ -23,6 +23,7 @@ const unknownEndpoint = (request, response, next) => {
 app.use(cors());
 app.use(express.json());
 // app.use(requestLogger);
+app.use(express.static("dist"));
 app.use(
   morgan(function (tokens, req, res) {
     return [
@@ -37,8 +38,6 @@ app.use(
     ].join(" ");
   }),
 );
-
-app.use(express.static("dist"));
 
 const generateId = () => {
   const maxId =
@@ -64,6 +63,10 @@ let notes = [
     important: true,
   },
 ];
+
+app.get("/", (_request, response) => {
+  response.send("<h1>Hello World</h1>");
+});
 
 app.get("/api/notes", (_request, response) => {
   response.json(notes);
