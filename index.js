@@ -38,6 +38,8 @@ app.use(
   }),
 );
 
+app.use(express.static("dist"));
+
 const generateId = () => {
   const maxId =
     notes.length > 0 ? Math.max(...notes.map((n) => Number(n.id))) : 0;
@@ -118,7 +120,7 @@ app.get("/api/info", (_request, response) => {
 
 app.use(unknownEndpoint);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
